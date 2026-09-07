@@ -1,5 +1,5 @@
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
-
+import { posts, Post } from "./data/ts";
 const port = 8000;
 
 const server = createServer((req: IncomingMessage, res: ServerResponse) => {
