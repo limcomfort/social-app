@@ -1,15 +1,28 @@
 import { createServer, IncomingMessage, ServerResponse } from "node:http";
-import { posts, Post } from "./data/ts";
+import { getPosts, getPostById, notFound } from "./controllers.js";
 const port = 8000;
 
 const server = createServer((req: IncomingMessage, res: ServerResponse) => {
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.end(
-    JSON.stringify({
-      message: "Тест АПИ! Привет!",
-      timestamp: new Date().toISOString(),
-    })
-  );
+  const url = req.url || '/';
+  const method = req.method || 'GET';
+
+  console.log('${method} ${url}');
+  const [path, queryString] = url.split('?');
+
+  if(method === 'GET') {
+    if (path === '/') {
+      getPosts(req, res);
+      return;
+    }
+
+    const match = path.match(/^\/posts\/([a-zA-Z0-9]+)$/);
+    if (match) {
+      const id = match[1];
+      getPostById(req, res, { id })
+    }
+  }
+
+  notFound(req, res);
 });
 
 server.listen(port, () => {
