@@ -1,12 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
-import {
-  getAllPosts,
-  getPost,
-  createNewPost,
-  removePost,
-  notFound,
-} from "./controllers.js";
+import postsRouter from "./routes/posts.js";
+import { notFound } from "./controllers.js"
 
 dotenv.config();
 
@@ -15,13 +10,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get("/posts", getAllPosts);
-
-app.get(".posts/:id", getPost);
-
-app.post("/posts", createNewPost);
-
-app.delete("/posts/:id", removePost);
+app.get("/posts", postsRouter);
 
 app.use(notFound);
 
