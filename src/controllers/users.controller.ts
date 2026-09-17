@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { getAllUsers, getUserById } from "../models/users.js";
+import { getAllUsers, getUserById } from "../models/users";
 
 export const getUsers = (req: Request, res: Response) => {
   const users = getAllUsers();
-  res.json({ succes: true, data: users });
+  res.json({ success: true, data: users });
 };
 
 export const getUser = (req: Request, res: Response) => {
